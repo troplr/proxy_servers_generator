@@ -9,11 +9,15 @@
 @description:
             proxy server 基类
 """
+from models import ProxyServerORM
+from db_config import Session
+from sqlalchemy.exc import IntegrityError
 
 class ProxyServer:
     ip = None
     port = None
     type = None
+    type2 = None
     is_anonymous = None
     location = None
 
@@ -40,12 +44,25 @@ class ProxyServer:
         self.generate_type()
 
     def save_to_db(self):
-        pass
+        db_session = Session()
+        db_session.add(
+            ProxyServerORM(
+                ip = self.ip,
+                port = self.port,
+                location = self.location,
+                type = self.type,
+                type2 = self.type2,
+                is_anonymous = self.is_anonymous
+            )
+        )
+        try:
+            db_session.commit()
+            return True
+        except IntegrityError as e:
+            print(str(e))
+        db_session.close()
 
     def show_in_cmd(self):
-        print('\n---------- New Proxy Server ---------------')
-        print('ip:\t\t{}'.format(self.ip))
-        print('port:\t{}'.format(self.port))
-        print('type:\t{}'.format(self.type))
-        print('is_anonymous:\t{}'.format(self.is_anonymous))
-        print('location:\t\t{}'.format(self.location))
+        print('\n{}\t{}\t{}\t{}\t{}\t{}'\
+              .format(self.ip,self.port,self.type,self.type2,\
+                      self.is_anonymous,self.location))

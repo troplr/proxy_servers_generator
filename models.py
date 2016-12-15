@@ -18,6 +18,8 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 class ProxyServerORM(Base):
+    __tablename__ = 'proxy_server'
+
     id = Column(Integer,
         primary_key=True,autoincrement=True)
     ip = Column(String)
@@ -25,10 +27,8 @@ class ProxyServerORM(Base):
     location = Column(String)
     is_anonymous = Column(Boolean)
     type = Column(String)
+    type2 = Column(String)
     last_check_time = Column(DateTime)
-
-    def __init__(self,table_name='proxy_server'):
-        self.__tablename__ = table_name
 
     def __repr__(self):
         return (
