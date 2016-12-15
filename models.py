@@ -17,8 +17,9 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
-class ProxyServer(Base):
-    id = Column(Integer,primary_key=True,autoincrement=True)
+class ProxyServerORM(Base):
+    id = Column(Integer,
+        primary_key=True,autoincrement=True)
     ip = Column(String)
     port = Column(Integer)
     location = Column(String)
@@ -31,5 +32,5 @@ class ProxyServer(Base):
 
     def __repr__(self):
         return (
-            "<ProxyServer(ip={},port={},location={})>"
+            "<ProxyServerORM(ip={},port={},location={})>"
         ).format(self.ip,self.port,self.location)
