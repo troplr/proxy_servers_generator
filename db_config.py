@@ -32,10 +32,12 @@ print(pg_url)
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
 Session = sessionmaker()
-Session.configure(
-    bind = create_engine(
+
+engine = create_engine(
         name_or_url=pg_url,
         echo=False
     )
-)
+
+Session.configure(bind=engine)
+
 

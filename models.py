@@ -29,6 +29,8 @@ class ProxyServerORM(Base):
     type = Column(String)
     type2 = Column(String)
     last_check_time = Column(DateTime)
+    check_in_this_session = Column(Boolean)
+    fail_cot = Column(Integer)
 
     def __repr__(self):
         return (

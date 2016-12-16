@@ -30,7 +30,7 @@ class XiCiProxyServer(ProxyServer):
     def __init__(self,html_section,type2):
         ProxyServer.__init__(self)
         self.type2 = type2
-        self.is_anonymous = self.type2 in ['wn','nn']
+        self.is_anonymous = type2 in ['wn','nn']
         for t_name in ['th','td']:
             self.tds = html_section.find_all(t_name)
             if self.tds:
