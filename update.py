@@ -24,7 +24,7 @@ class UpdateModel:
     def get_limit_proxy_servers(self,limit):
         servers = self.db_session.query(ProxyServerORM).filter(
             text("check_in_this_session is not True and "
-                 "type2='wt' order by id {} limit :limit"\
+                 "(type2='wt' or type2='wn') order by id {} limit :limit"\
                  .format(random.choice(['','desc'])))
         ).params(limit=limit).all()
         return servers
@@ -54,12 +54,15 @@ class UpdateModel:
             print('\n{} test Success: {}\n'.format(proxy_url,r.text))
             return r.text
         except Exception as e:
+            #print(str(e))
             print('{} test ERROR '.format(proxy_url))
             return False
 
     def mark_test_result(self,proxy_server,test_result):
+        '''
         if proxy_server.fail_cot > 5:
             self.db_session.delete(proxy_server)
+        '''
         proxy_server.check_in_this_session = True
         proxy_server.last_check_time = get_beijing_time()
         if test_result==False:
@@ -79,9 +82,9 @@ class UpdateModel:
         )
         conn.close()
 
-    def run_test(self):
+    def run_test(self,limit=512):
         while(1):
-            servers = self.get_limit_proxy_servers(limit=512)
+            servers = self.get_limit_proxy_servers(limit=limit)
             if len(servers)==0:
                 print('the big loop ok! ')
                 self.open_new_test_session()
@@ -89,7 +92,7 @@ class UpdateModel:
                 continue
             left = 0
             gap = 128
-            while(left<1000):
+            while(left<limit):
                 pool = ThreadPool(128)
                 res = pool.map(self.alter_server,servers[left:left+gap])
                 try:
