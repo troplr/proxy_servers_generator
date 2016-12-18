@@ -56,7 +56,8 @@ class DB_Config(JsonConfig):
             'port' :        None,
             "local_pool_size":   20,
             "remote_pool_size":  5,
-            "master_db_in":      False
+            "master_db_in":      False,
+            "db_type":      'postgresql'
         }
         JsonConfig.__init__(
             self,json_file_path,default_info_dict)

@@ -1,13 +1,13 @@
 #coding:utf-8
 """
-@file:      proxy_server_orm
+@file:      models.py
 @author:    lyn
 @contact:   tonylu716@gmail.com
 @python:    3.3
 @editor:    PyCharm
-@create:    2016-12-12 19:08
+@create:    2016-12-18 16:04
 @description:
-            代理服务器的数据库对象
+            spider tools database ORM models
 """
 from sqlalchemy import (
     Column, Integer,
@@ -31,6 +31,7 @@ class ProxyServerORM(Base):
     last_check_time = Column(DateTime)
     check_in_this_session = Column(Boolean)
     fail_cot = Column(Integer)
+    busy = Column(Boolean)
 
     def __repr__(self):
         return (

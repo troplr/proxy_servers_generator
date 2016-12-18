@@ -21,9 +21,9 @@ for path in ['.','..']:
         continue
 
 pg_url = (
-    'postgresql://{}:{}@{}:{}/{}'
+    '{}://{}:{}@{}:{}/{}'
 ).format(
-    db['user'],db['password'],
+    db['db_type'],db['user'],db['password'],
     db['host'],db['port'],db['db_name'],
 )
 
@@ -34,8 +34,8 @@ from sqlalchemy.orm import sessionmaker
 Session = sessionmaker()
 
 engine = create_engine(
-        name_or_url=pg_url,
-        echo=False
+        name_or_url = pg_url,
+        echo = False
     )
 
 Session.configure(bind=engine)
