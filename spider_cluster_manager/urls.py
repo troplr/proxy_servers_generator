@@ -16,9 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from tool.views import *
+from tool import urls as tool_urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^get_proxy_config',get_proxy_config),
+    url(r'^tool/',include(tool_urls)),
 ]

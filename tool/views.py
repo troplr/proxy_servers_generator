@@ -22,12 +22,14 @@ def get_proxy_config(request):
         ret['message'] = 'use GET method'
         return ret
     db_session = Session()
-    order_key = ['id','last_check_time','fail_cot','location']
     try:
         proxy_servers = db_session.query(ProxyServerORM).filter(
-            text("busy is not true and fail_cot<0 \
-                order by {} limit 100"\
-                .format(random.choice(order_key)))).all()
+            text("busy is not true \
+                order by {} {} limit 100".format(
+                    random.choice(['id','last_check_time',
+                                   'fail_cot','location']),
+                    random.choice(['desc',''])
+            ))).all()
         proxy_server = random.choice(proxy_servers)
         ret['data'] = {
             'ip': proxy_server.ip,
@@ -35,9 +37,12 @@ def get_proxy_config(request):
             'location': proxy_server.location,
             'proxy_type': proxy_server.type,
         }
+        proxy_server.busy = True
+        db_session.commit()
         ret['status'] = 1
     except Exception as e:
         ret['message'] = str(e)
         print(str(e))
+    db_session.close()
     return ret
 
