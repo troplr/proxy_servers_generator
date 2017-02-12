@@ -46,7 +46,7 @@ class UpdateModel:
         }
         try:
             r = requests.get(
-                url = "https://api.ipify.org/",
+                url = "https://www.google.com/",
                 proxies = proxies,
                 timeout = 10,
                 #verify = False
