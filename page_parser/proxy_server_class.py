@@ -14,12 +14,13 @@ from db_config import Session
 from sqlalchemy.exc import IntegrityError
 
 class ProxyServer:
-    ip = None
-    port = None
-    type = None
-    type2 = None
-    is_anonymous = None
-    location = None
+    def __init__(self):
+        self.ip = None
+        self.port = None
+        self.type = None
+        self.type2 = None
+        self.is_anonymous = None
+        self.location = None
 
     def generate_ip(self):
         pass
@@ -52,7 +53,8 @@ class ProxyServer:
                 location = self.location,
                 type = self.type,
                 type2 = self.type2,
-                is_anonymous = self.is_anonymous
+                is_anonymous = self.is_anonymous,
+                fail_cot = 0
             )
         )
         try:
