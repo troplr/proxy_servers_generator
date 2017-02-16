@@ -23,8 +23,8 @@ class UpdateModel:
 
     def get_limit_proxy_servers(self,limit):
         servers = self.db_session.query(ProxyServerORM).filter(
-            text("check_in_this_session is not True and "
-                 "(type2='wt' or type2='wn') order by id {} limit :limit"\
+            text("check_in_this_session is not True "
+                 " order by id {} limit :limit"\
                  .format(random.choice(['','desc'])))
         ).params(limit=limit).all()
         return servers
