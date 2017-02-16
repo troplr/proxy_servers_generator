@@ -9,6 +9,8 @@
 @description:
 
 """
+import os,sys
+sys.path.append(os.path.dirname(sys.path[0]))
 
 from page_parser.xicidaili import Parser,XiCiProxyServer
 from multiprocessing.dummy import Pool as ThreadPool

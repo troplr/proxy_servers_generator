@@ -15,8 +15,11 @@ class Parser:
         return self.soup.select('tbody > tr') 
 
     def get_page_num(self):
-        return int(self.soup.find(id="listnav")\
-                .select('li')[-2].text)
+        try:
+            return int(self.soup.find(id="listnav")\
+                    .select('li')[-2].text)
+        except AttributeError:
+            return 1500
 
 
 class KuaiProxyServer(ProxyServer):
